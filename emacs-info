@@ -32,7 +32,7 @@
 # unbind start-process to force man to be run synchronously, and hence
 # allow the error to be trapped (otherwise, it is trapped by the
 # process sentinel)
-emacs -q --no-splash --eval "(progn (require 'man) (require 'info) (defun info-or-man (topic) (condition-case ierr (info topic) (error (condition-case ierr (progn (info) (Info-goto-node (Info-extract-menu-item topic))) (error (unless (man topic) (user-error \"No info or manual entry for %s\" topic))))))) (fmakunbound 'start-process) (define-key Man-mode-map \"q\" 'kill-emacs) (define-key Info-mode-map \"q\" 'kill-emacs) (setq Man-notify-method 'bully) (condition-case ierr (info-or-man \"$1\") (error (kill-emacs 1))))"
+emacs -q --no-splash --eval "(progn (require 'man) (require 'info) (defun info-or-man (topic) (condition-case ierr (info topic) (error (unless (man topic) (user-error \"No info or manual entry for %s\" topic))))) (fmakunbound 'start-process) (define-key Man-mode-map \"q\" 'kill-emacs) (define-key Info-mode-map \"q\" 'kill-emacs) (setq Man-notify-method 'bully) (condition-case ierr (info-or-man \"$1\") (error (kill-emacs 1))))"
 if [ $? -ne 0 ]; then
   echo "No such info or man page: $1"
 fi
