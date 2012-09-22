@@ -33,7 +33,7 @@
 # allow the error to be trapped (otherwise it is trapped by the
 # process sentinel)
 # FIXME: Put the semi-maximize-frame stuff elsewhere
-emacs -q --no-splash --eval "(progn (load \"$HOME/local/share/emacs/site-lisp/place-frame.el\") (semi-maximize-frame) (require 'man) (require 'info) (defun info-or-man (topic) (condition-case ierr (info topic) (error (unless (man topic) (user-error \"No info or manual entry for %s\" topic))))) (fmakunbound 'start-process) (define-key Man-mode-map \"q\" 'kill-emacs) (define-key Info-mode-map \"q\" 'kill-emacs) (setq Man-notify-method 'bully) (condition-case ierr (info-or-man \"$1\") (error (kill-emacs 1))))"
+emacs -q --no-splash --eval "(progn (load \"$HOME/local/share/emacs/site-lisp/place-frame.el\") (semi-maximize-frame) (require 'man) (require 'info) (defun info-or-man (topic) (condition-case ierr (info topic) (error (unless (man topic) (user-error \"No info or manual entry for %s\" topic))))) (fmakunbound 'start-process) (define-key Man-mode-map \"q\" 'kill-emacs) (define-key Info-mode-map \"q\" 'kill-emacs) (setq Man-notify-method 'bully) (condition-case ierr (info-or-man \"$*\") (error (kill-emacs 1))))"
 # FIXME: make emacsclient stay focused
 #emacsclient --no-wait --create-frame --eval "(progn (load \"$HOME/local/share/emacs/site-lisp/place-frame.el\") (semi-maximize-frame) (defun info-or-man (topic) (condition-case ierr (info topic) (error (unless (man topic) (user-error \"No info or manual entry for %s\" topic))))) (let ((Man-notify-method 'bully)) (info-or-man \"$1\")))"
 if [ $? -ne 0 ]; then
